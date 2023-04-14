@@ -1,13 +1,20 @@
 import { Body, Param, Controller, Get, Post, Patch, Delete } from '@nestjs/common';
 import { TasksService } from './tasks.service';
-import { CreateTaskDTO, UpdateTaskDTO } from './dto/task.dto'
+import { ConfigService } from '@nestjs/config';
+import { CreateTaskDTO, UpdateTaskDTO } from './dto/task.dto';
 
 @Controller('tasks')
 export class TasksController {
     // Adding service as arg to constructor makes service 
     // an attribute of the TasksController class (check "this.")
-    constructor(private readonly tasksService: TasksService) {
+    constructor(private readonly tasksService: TasksService, private configService: ConfigService) {
 
+    }
+
+    testConfigService(){
+        console.log(process.env)
+        console.log(this.configService.get('db'))
+        console.log(this.configService.get('jwt_secret'))
     }
 
     @Get(':id')// Route Params
@@ -17,6 +24,7 @@ export class TasksController {
 
     @Get()
     getAllTasks() {
+        this.testConfigService()
         return this.tasksService.getAllTasks()
     }    
 
