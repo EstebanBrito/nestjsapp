@@ -11,12 +11,6 @@ export class TasksController {
 
     }
 
-    testConfigService(){
-        console.log(process.env)
-        console.log(this.configService.get('db'))
-        console.log(this.configService.get('jwt_secret'))
-    }
-
     @Get(':id')// Route Params
     getTask(@Param('id') id: string) {
         return this.tasksService.getTask(id)
@@ -24,7 +18,6 @@ export class TasksController {
 
     @Get()
     getAllTasks() {
-        this.testConfigService()
         return this.tasksService.getAllTasks()
     }    
 
