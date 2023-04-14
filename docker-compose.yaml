@@ -1,0 +1,31 @@
+version: '3'
+services:
+  api:
+    build:
+      context: .
+    container_name: nestjs-api
+    ports:
+      - '3000:3000'
+    env_file:
+      - ./.env
+    environment:
+      - DB_HOST=database
+    depends_on:
+      - database            
+    networks:
+      - todo_app_network
+    restart: unless-stopped
+
+  database:
+    image: mysql:8.0
+    container_name: mysql-db
+    ports:
+      - '3306:3306'
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+    networks:
+      - todo_app_network
+
+networks:
+  todo_app_network:
+    driver: bridge
